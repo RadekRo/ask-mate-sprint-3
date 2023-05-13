@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+    <div class="questions-list">
+        <span class="questions-list-header"><h4>Latest Questions ({{number_of_latest_questions}})</h4></span>
+        <form action="/ask-question">
+            <span><button type="submit" class="btn btn-primary">Ask Question</button></span>
+        </form>
+    </div>
+</div>
+<div class="container my-4">
+    <form action="/list">
+        <button type="submit" class="btn btn-info btn-sm">Show All Questions ({{total_amount_of_questions['count_questions']}})</button>
+    </form>
+</div>
+{% for question in latest_questions %}
+<div class="container question">
+    <div class="question-info">
+        <p class="question-info-element">{{question.vote_number}} votes</p>
+        <p class="question-info-element">{{question.answer_number}} 
+            {% if question.answer_number == 1 %} answer
+            {% else %} answers
+            {% endif %}</p>
+        <p class="question-info-element">{{question.view_number}} views</p>
+    </div>
+    <div class="question-details">
+        <p class="question-title"><a href="{{ url_for('route_question',id=question.id)}}" class="text-decoration-none">{{question.title}}</a></p>
+        <p class="question-message">{{question.message}}</p>
+        <p class="question-date"><i class="fa-regular fa-calendar-days"></i> Posted: {{question.submission_time}}</p>
+        <p>
+            {% for tag in all_question_tags %}
+                {% if tag.question_id == question.id %}
+                <a href="{{ url_for('search_questions_by_tag',tag_id=tag.tag_id)}}" class="link-dark text-decoration-none"><div class="tag rounded px-1">#{{tag.tag_name}}</div></a>
+                {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+</div>
+{% endfor %}
+<div class="container question">
+    <form action="/list">
+        <button type="submit" class="btn btn-info btn-sm">Show All Questions ({{total_amount_of_questions['count_questions']}})</button>
+    </form>
+</div>
+{% endblock %}

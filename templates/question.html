@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<a href="/list" class="btn btn-light btn-sm mb-4" role="button">
+    <i class="fa-solid fa-circle-arrow-left"></i> Back to All Questions
+</a>
+
+<div id="question-header"
+class="container">
+    <div class="questions-list">
+        <span class="questions-list-header">
+            <h4>{{question.title}}</h4>
+            <h5><i class="fa-sharp fa-solid fa-square-poll-vertical text-secondary"></i> <a href="{{ url_for('question_vote_substract', id=question.id)}}"><i class="fa-solid fa-circle-minus text-danger"></i></a><span class="px-2">{{question.vote_number}}</span><a href="{{ url_for('question_vote_add', id=question.id)}}"><i class="fa-solid fa-circle-plus text-success"></i></a></h5>
+            <h7><i class="fa-regular fa-calendar-days"></i> {{question.submission_time}} <br/><i class="fa-regular fa-eye"></i> {{question.view_number}}</h7>
+        </span>
+        <form action="/ask-question">
+            <span>
+                <button type="submit" class="btn btn-primary">Ask Question</button>
+            </span>
+        </form>
+    </div>
+</div>
+
+<div id="question-tools" 
+class="container">
+    <i class="fa-solid fa-ellipsis-vertical mx-1"></i>
+        {% if answers|length > 0 %}
+            <a class="btn btn-outline-success btn-sm disabled" role="button">
+        {% else %}
+            <a href="{{ url_for('edit_question', id=question.id)}}" class="btn btn-outline-success btn-sm" role="button">
+        {% endif %}
+        <i class="fa-solid fa-pen-to-square"></i> Edit</a>
+        <a href="{{ url_for('delete_question', id=question.id)}}" class="btn btn-outline-danger btn-sm" role="button"><i class="fa-solid fa-trash-can"></i> Delete</a>
+        {% if answers|length > 0 %}
+            <span class="text-secondary"><i class="fa-solid fa-circle-info px-2"></i>Editon disabled. Question was allready answered.</span>
+        {% endif %}
+</div>
+
+<div id="question-message" 
+class="container border-top my-2 py-2" >
+    {{question.message}}
+</div>
+
+{% if question.image != 'no-image' %}
+<div id="question-image" 
+class="container">
+    <img class="pictures" src="/{{question.image}}" alt="question's image file" />
+</div>
+{% endif %}
+
+<div id="question-tags" 
+class="container my-3">
+    {% for tag in tags %}
+        <div class="tag rounded px-2">#{{tag.name}} <a href="/question/{{question.id}}/tag/{{tag['id']}}/delete" class="text-danger text-decoration-none ms-2"><b>x</b></a></div>
+    {% endfor %}
+    <div class="tag rounded bg-info pe-2"><a href="{{ url_for('add_tag', question_id=question.id)}}" class="text-dark text-decoration-none ms-2">Add #tag</a></div>
+</div>
+
+{% for comment in comments_question %}
+<div id="question-comment" 
+    class="container border-top px-5 py-2 comment-message">
+        {{ comment.message }} - <span class="text-info">{{comment.submission_time}}</span> 
+        <a href="{{ url_for('route_edit_comment', comment_id=comment.id, id=question.id)}}" class="link-success px-1"><i class="fa-solid fa-pen-to-square"></i></a>
+        <span class="text-info">Edited: {{comment.edited_number}} time(s)</span>
+        <a href="{{ url_for('route_delete_comment', comment_id=comment.id, id=question.id)}}" class="link-danger"><i class="fa-solid fa-trash-can"></i></a>
+</div>
+{% endfor %}
+
+<div id="add-comment-button" 
+class="container border-bottom py-2">
+    <a href="{{ url_for('add_comment_question', id=question.id)}}" class="text-decoration-none link-warning"><i class="fa-regular fa-comment"></i> Add a comment</a>
+</div>
+
+<div id="answers-header"
+class="answers-header container bg-light py-2 d-flex justify-content-between">
+    <h5>{{ answers|length }} Answers</h5>
+    <a href="{{ url_for('route_answer', id=question.id)}}" class="btn btn-secondary btn-sm" role="button">Add New Answer</a>
+</div>
+
+{% for answer in answers %}
+<div id="answer" 
+class="container ms-0">
+
+    <div id="answer-message" 
+    class="container my-2 py-2">
+        {{answer.message}}
+        <div class="mt-3" id="answer-tools">
+            <i class="fa-solid fa-ellipsis-vertical mx-1"></i>
+            <a href="{{ url_for('route_edit_answer', answer_id=answer.id, id=question.id)}}" title="Edit answer" class="btn btn-outline-success btn-sm" role="button"><i class="fa-solid fa-pen-to-square"></i></a>
+            <a href="{{ url_for('route_delete_answer',answer_id=answer.id, id=question.id)}}" class="btn btn-outline-danger btn-sm" role="button"><i class="fa-solid fa-trash-can"></i></a>
+        </div>
+    </div>
+
+    {% if answer.image != 'no-image' %}
+        <div id="answer-image" 
+        class="container">
+            <img class="pictures" src="/{{answer.image}}" alt="answer's image file" />
+        </div>
+    {% endif %}
+
+    <div id="answer-data-and-voting" 
+    class="answer-data">
+        Answered: {{answer.submission_time}}
+        <h5><i class="fa-sharp fa-solid fa-square-poll-vertical text-info"></i> <a href="{{ url_for('route_answer_substract_vote', answer_id=answer.id, question_id = question.id)}}"><i class="fa-solid fa-circle-minus text-danger"></i></a><span class="px-2">{{answer.vote_number}}</span><a href="{{ url_for('route_answer_add_vote', answer_id=answer.id, question_id = question.id)}}"><i class="fa-solid fa-circle-plus text-success"></i></a></h5>
+    </div>
+
+    <div id="answer-comments">
+        {% for comment in comments_answer %}
+            {% if comment.answer_id == answer.id %}
+            <div id="comment-message-data-and-voting" 
+            class="container border-top px-5 py-2 comment-message">
+                {{ comment.message }} - <span class="text-info">{{comment.submission_time}}</span> 
+                <a href="{{ url_for('route_edit_comment', comment_id=comment.id, id=question.id)}}" class="link-success px-1"><i class="fa-solid fa-pen-to-square"></i></a>
+                <span class="text-info">Edited: {{comment.edited_number}} time(s)</span>
+                <a href="{{ url_for('route_delete_comment', comment_id=comment.id, id=question.id)}}" class="link-danger px-1"><i class="fa-solid fa-trash-can"></i></a>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div id="add-comment-to-answer-button" 
+    class="text-info border-bottom py-2 ps-5">
+        <a href="{{ url_for('route_comment_answer', answer_id=answer.id, id=question.id)}}" class="text-decoration-none link-info"><i class="fa-regular fa-comment"></i> Add a comment</a>
+    </div>
+
+</div>
+{% endfor %}
+{% endblock %}

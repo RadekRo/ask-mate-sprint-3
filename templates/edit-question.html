@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="question-list question-txt">
+        <form action="/question/update" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="{{id}}"/>
+            <input type="hidden" name="question_image" value="{{question.image}}"/>
+            <p>
+                <label class="question-title " for="title">Question title:</label><br/>
+                <input id="title" name="title" type="text" value="{{question.title}}"/>
+            </p>
+            <p>
+                <label for="message">Message:</label><br/>
+                <textarea id="message" name="message" rows="4" cols="50">{{question.message}}</textarea>
+            </p>
+            <p>
+                <label class="add-img" for="image">Image (only jpg files allowed):</label><br/>
+                <input class="add-img" id="file" name="file" type = "file" /><br />
+                {% if question.image != "no-image" %}
+                    Warning! If you will choose a new file, the old file will be overwritten!
+                {% endif %}
+            </p>
+            {% if question.image != "no-image" %}
+            <p>
+                <img src="/{{question.image}}" style="max-width: 150px" />
+            </p>
+            {% endif %}
+            
+            <button class="edit" type="submit">Update question</button><br />
+            <a href="{{url_for('route_question', id = id)}}">CANCEL</a>
+        </form>
+    </div>
+
+
+{% endblock %}

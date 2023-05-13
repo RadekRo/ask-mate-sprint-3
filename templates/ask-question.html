@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="question-list question-txt">
+        <form action="/ask-question" method="POST" enctype="multipart/form-data">
+        <p>
+            <label class="question-title" for="title">Question title:</label><br/>
+            <input id="title" name="title" type="text" value="" />
+        </p>
+        <p>
+            <label for="message">Message:</label><br/>
+            <textarea id="message" name="message" rows="4" cols="50"></textarea>
+        </p>
+        <p>
+            <label class="add-img" for="file">Image (only jpg files allowed):</label><br/>
+            <input class="add-img" id="file" name="file" type = "file" accept=".jpg" />
+        </p>
+            <button class="add-answer" type="submit">Add your question</button>
+        <p>
+            
+        </p>
+        </form>
+    </div>
+
+
+{% endblock %}

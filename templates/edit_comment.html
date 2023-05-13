@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+    <b class="comment-title-answer">EDIT COMMENT</b><br/>
+    <form action="/comment/{{comment_id}}/edit_comment" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{{id}}">
+    Submitted: {{comment.submission_time}}<br/>
+    <p>
+        <label for="message">Message:</label><br/>
+        <textarea id="message" name="message" rows="4" cols="50">{{comment.message}}</textarea>
+    </p>
+    <button class="add-your-answer" type="submit">Edit your comment</button>
+    <form action="/list" enctype="multipart/form-data">
+        <button class="add-your-answer" type="submit">Go back</button>
+    </form>
+</form>
+    
+{% endblock %}
+

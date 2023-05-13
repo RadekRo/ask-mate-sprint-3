@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+<a href="/list" class="btn btn-light btn-sm mb-4" role="button">
+    <i class="fa-solid fa-circle-arrow-left"></i> Back to All Questions
+</a>
+
+<div class="container">
+    <div class="questions-list">
+        <span class="questions-list-header"><h4>Searching Results</h4></span>
+        <form action="/ask-question">
+            <span><button type="submit" class="btn btn-primary">Ask Question</button></span>
+        </form>
+    </div>
+</div>
+<div class="container my-4">
+    <span>
+        <h5>Found: {{search_result_number}} question(s)</h5>
+    </span>
+</div>
+{% for question in filtered_questions %}
+<div class="container question">
+    <div class="question-info">
+        <p class="question-info-element">{{question.vote_number}} votes</p>
+        <p class="question-info-element">{{question.answer_number}} 
+            {% if question.answer_number == 1 %} answer
+            {% else %} answers
+            {% endif %}</p>
+        <p class="question-info-element">{{question.view_number}} views</p>
+    </div>
+    <div class="question-details">
+        <p class="question-title"><a href="{{ url_for('route_question',id=question.id)}}" class="text-decoration-none">{{question.title | safe}}</a></p>
+        <p class="question-message">{{question.message | safe}}</p>
+        <p class="question-date"><i class="fa-regular fa-calendar-days"></i> Posted: {{question.submission_time}}</p>
+        <p>
+            {% for tag in all_question_tags %}
+                {% if tag.question_id == question.id %}
+                    <div class="tag rounded px-1">#{{tag.tag_name}}</div>
+                {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+</div>
+
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="question-list question-txt ">
+        <form method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="answer_id" value={{answer_id}}>
+            <input type="hidden" name="question_id" value={{id}}>
+        <p>
+            <label class="message" for="message">Comment:</label><br/>
+            <textarea id="message" name="message" rows="4" cols="50"></textarea>
+        </p>
+        <button class="add-your-answer" type="submit">Add your comment to answer</button>
+        </form>
+    </div>
+{% endblock %}

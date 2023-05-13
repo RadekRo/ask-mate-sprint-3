@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+{% block content %}
+       
+<div class="container">
+    <div class="questions-list">
+        <span class="questions-list-header"><h4>All Questions</h4></span>
+        <form action="/ask-question">
+            <span><button type="submit" class="btn btn-primary">Ask Question</button></span>
+        </form>
+    </div>
+</div>
+<div class="container my-4 d-flex justify-content-between">
+    <span>
+        <h5>{{total_amount_of_questions['count_questions']}} questions</h5>
+    </span>
+    <span>
+        <div class="btn-group" role="group" aria-label="Submission time">
+            
+            {% if order_by == "submission_time" and order_direction == "ASC" %}
+                <a href="/list?order_by=submission_time&order_direction=DESC" class="btn btn-dark btn-sm" role="button">
+                    Submission time <i class="fa-sharp fa-solid fa-caret-up"></i>
+                </a>
+            {% elif order_by == "submission_time" and order_direction == "DESC" %}
+            <a href="/list?order_by=submission_time&order_direction=ASC" class="btn btn-dark btn-sm" role="button">
+                Submission time <i class="fa-sharp fa-solid fa-caret-down"></i>
+            </a>
+            {% else %}
+            <a href="/list?order_by=submission_time&order_direction=DESC" class="btn btn-outline-secondary btn-sm" role="button">
+                Submission time
+            </a>
+            {% endif %}
+            
+            {% if order_by == "view_number" and order_direction == "ASC" %}
+                <a href="/list?order_by=view_number&order_direction=DESC" class="btn btn-dark btn-sm" role="button">
+                    View number <i class="fa-sharp fa-solid fa-caret-up"></i>
+                </a>
+            {% elif order_by == "view_number" and order_direction == "DESC" %}
+            <a href="/list?order_by=view_number&order_direction=ASC" class="btn btn-dark btn-sm" role="button">
+                View number <i class="fa-sharp fa-solid fa-caret-down"></i>
+            </a>
+            {% else %}
+            <a href="/list?order_by=view_number&order_direction=DESC" class="btn btn-outline-secondary btn-sm" role="button">
+                View number
+            </a>
+            {% endif %}
+            
+            {% if order_by == "vote_number" and order_direction == "ASC" %}
+                <a href="/list?order_by=vote_number&order_direction=DESC" class="btn btn-dark btn-sm" role="button">
+                    Vote number <i class="fa-sharp fa-solid fa-caret-up"></i>
+                </a>
+            {% elif order_by == "vote_number" and order_direction == "DESC" %}
+            <a href="/list?order_by=vote_number&order_direction=ASC" class="btn btn-dark btn-sm" role="button">
+                Vote number <i class="fa-sharp fa-solid fa-caret-down"></i>
+            </a>
+            {% else %}
+            <a href="/list?order_by=vote_number&order_direction=DESC" class="btn btn-outline-secondary btn-sm" role="button">
+                Vote number
+            </a>
+            {% endif %}
+            
+            {% if order_by == "title" and order_direction == "ASC" %}
+                <a href="/list?order_by=title&order_direction=DESC" class="btn btn-dark btn-sm" role="button">
+                    Title <i class="fa-sharp fa-solid fa-caret-up"></i>
+                </a>
+            {% elif order_by == "title" and order_direction == "DESC" %}
+            <a href="/list?order_by=title&order_direction=ASC" class="btn btn-dark btn-sm" role="button">
+                Title <i class="fa-sharp fa-solid fa-caret-down"></i>
+            </a>
+            {% else %}
+            <a href="/list?order_by=title&order_direction=DESC" class="btn btn-outline-secondary btn-sm" role="button">
+                Title
+            </a>
+            {% endif %}
+
+            {% if order_by == "message" and order_direction == "ASC" %}
+                <a href="/list?order_by=message&order_direction=DESC" class="btn btn-dark btn-sm" role="button">
+                    Message <i class="fa-sharp fa-solid fa-caret-up"></i>
+                </a>
+            {% elif order_by == "message" and order_direction == "DESC" %}
+            <a href="/list?order_by=message&order_direction=ASC" class="btn btn-dark btn-sm" role="button">
+                Message <i class="fa-sharp fa-solid fa-caret-down"></i>
+            </a>
+            {% else %}
+            <a href="/list?order_by=message&order_direction=DESC" class="btn btn-outline-secondary btn-sm" role="button">
+                Message
+            </a>
+            {% endif %}
+        </div>
+    </span>
+</div>
+{% for question in questions %}
+<div class="container question">
+    <div class="question-info">
+        <p class="question-info-element">{{question.vote_number}} votes</p>
+        <p class="question-info-element">{{question.answer_number}} 
+            {% if question.answer_number == 1 %} answer
+            {% else %} answers
+            {% endif %}</p>
+        <p class="question-info-element">{{question.view_number}} views</p>
+    </div>
+    <div class="question-details">
+        <p class="question-title"><a href="{{ url_for('route_question',id=question.id)}}" class="text-decoration-none">{{question.title}}</a></p>
+        <p class="question-message">{{question.message}}</p>
+        <p class="question-date"><i class="fa-regular fa-calendar-days"></i> Posted: {{question.submission_time}}</p>
+        <p>
+            {% for tag in all_question_tags %}
+                {% if tag.question_id == question.id %}
+                    <a href="{{ url_for('search_questions_by_tag',tag_id=tag.tag_id)}}" class="link-dark text-decoration-none"><div class="tag rounded px-1">#{{tag.tag_name}}</div></a>
+                {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
