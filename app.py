@@ -11,8 +11,8 @@ app.secret_key = bcrypt.gensalt()
 
 @app.route('/')
 def index():
-    #session['username'] = 'radek'
-    #session['userid'] = 7
+    session['username'] = 'radek'
+    session['userid'] = 7
     registration = request.args.get('registration')
     if registration:
         registration_message = 'show'    
@@ -347,6 +347,10 @@ def users():
         return render_template('users.html', users_list = users_list)
     else:
         return redirect('/')
+
+@app.route('/user/<user_id>')
+def user_details():
+    pass
 
 if __name__ == '__main__':
     app.run()
