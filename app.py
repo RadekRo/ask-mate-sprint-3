@@ -338,7 +338,8 @@ def logout():
 @app.route('/users')
 def users():
     if session.get('username'):
-        pass
+        users_list = data_handler.get_users_list()
+        return render_template('users.html', users_list = users_list)
     else:
         return redirect('/')
 

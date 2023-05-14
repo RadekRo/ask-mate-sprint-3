@@ -23,6 +23,14 @@ def add_new_user(cursor, login:str, password:hex, current_date:str):
     cursor.execute(query, data)
 
 @database.connection_handler
+def get_users_list(cursor):
+    query = """
+        SELECT * FROM users
+       """
+    cursor.execute(query)
+    return cursor.fetchall()
+
+@database.connection_handler
 def get_all_questions(cursor, order_by, order_direction):
     if order_direction == "DESC":
         query = """
