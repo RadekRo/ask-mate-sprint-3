@@ -10,25 +10,27 @@
                 <th scope="col">
                     Registration date
                 </th>
-                <th scope="col">
+                <th scope="col text-center">
                     Question asked
                 </th>
-                <th scope="col">
+                <th scope="col text-center" >
                     Answers given
                 </th>
-                <th scope="col">
+                <th scope="col text-center">
                     Comments
                 </th>
             </tr>
         </thead>
         <tbody>
+            {% for user in users_list %}
             <tr>
-                <td scope="row">name</h>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>@fat</td>
+                <td scope="row">{{ user['login'] }}</h>
+                <td>{{ user['registration_date'] }}</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
 {% endblock %}
