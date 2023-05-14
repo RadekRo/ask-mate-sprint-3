@@ -26,9 +26,9 @@
             <tr>
                 <td scope="row">{{ user['login'] }}</h>
                 <td>{{ user['registration_date'] }}</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
+                <td>{{ user['num_questions'] }}</td>
+                <td>{{ user['num_answers'] }}</td>
+                <td>{{ user['num_comments'] }}</td>
             </tr>
             {% endfor %}
         </tbody>

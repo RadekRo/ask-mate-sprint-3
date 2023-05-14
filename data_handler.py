@@ -25,7 +25,15 @@ def add_new_user(cursor, login:str, password:hex, current_date:str):
 @database.connection_handler
 def get_users_list(cursor):
     query = """
-        SELECT * FROM users
+        SELECT u.login, u.registration_date, 
+            COUNT(DISTINCT q.id) AS num_questions,
+            COUNT(DISTINCT a.id) AS num_answers,
+            COUNT(DISTINCT c.id) AS num_comments
+        FROM users u
+        LEFT JOIN question q ON u.id = q.author
+        LEFT JOIN answer a ON u.id = a.author
+        LEFT JOIN comment c ON u.id = c.author
+        GROUP BY u.id;
        """
     cursor.execute(query)
     return cursor.fetchall()
