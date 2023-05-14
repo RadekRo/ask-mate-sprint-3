@@ -159,7 +159,7 @@ def edit_comment(cursor, current_date:str, comment_message:str, comment_id):
 def edit_answer(cursor, current_date:str, answer_message:str, answer_id):
     query = """
     UPDATE answer 
-    SET (message, submission_time) = (%(answer_message)s, %(date)s)
+    SET (message, submission_time) = (%(message)s, %(date)s)
     WHERE id = %(id)s    
     """
     data = {'message': answer_message, 'date': current_date, 'id': answer_id}
@@ -351,7 +351,7 @@ def remove_all_question_comments(cursor, question_id, answers_id_list):
 def remove_all_answer_comments(cursor, answer_id):
     query = """
     DELETE FROM comment
-    WHERE id = %(id)s
+    WHERE answer_id = %(id)s
     """
     data = {'id': answer_id}
     cursor.execute(query, data)
@@ -373,10 +373,10 @@ def remove_answer(cursor, answer_id:int, image:str):
 def update_question(cursor, question_id, question_date, question_title, question_message, question_image):
     query = """
     UPDATE question 
-    SET (submission_time, title, message, image) = ('{question_date}', '{question_title}', '{question_message}', '{question_image}')
+    SET (submission_time, title, message, image) = (%(date)s, %(title)s, %(message)s, %(image)s)
     WHERE id = %(id)s
     """
-    data = {'id': question_id}
+    data = {'id': question_id, 'date': question_date, 'title': question_title, 'message': question_message, 'image': question_image}
     cursor.execute(query, data)
 
 
