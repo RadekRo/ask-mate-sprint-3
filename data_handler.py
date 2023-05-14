@@ -15,6 +15,14 @@ def hash_password(user_input):
     return hash.hex()
 
 @database.connection_handler
+def add_new_user(cursor, login:str, password:hex, current_date:str):
+    query = """
+          INSERT INTO users (login, password, registration_date) 
+          VALUES (%(login)s, %(password)s, %(date)s); """
+    data = {'login': login, 'password': password, 'date': current_date}
+    cursor.execute(query, data)
+
+@database.connection_handler
 def get_all_questions(cursor, order_by, order_direction):
     if order_direction == "DESC":
         query = """

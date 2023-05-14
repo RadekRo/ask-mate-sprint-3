@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
     {% if error_message %}
-    <div class="text-center">
-        {{ error_message }}
+    <div class="text-center text-white bg-danger py-3 mb-3">
+        {{ error_message | safe }}
     </div>
     {% endif %}
     <div class="question-list question-txt dflex justify-content-center">
-        <form action="/ask-question" method="POST" enctype="multipart/form-data" class="form">
+        <form action="/registration" method="POST" class="form">
             <p>
                 <label for="title" class="form-txt">Login</label><br/>
-                <input id="login" class="form-control" name="title" type="text" value="" placeholder="Enter your login or email address"/>
+                <input id="login" class="form-control" name="login" type="text" value="" placeholder="Enter your login or email address"/>
             </p>
             <p>
                 <label class="form-txt" for="password">Password</label><br/>
