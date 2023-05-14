@@ -1,4 +1,4 @@
-import database
+import database, os, util, bcrypt
 import os
 import util
 
@@ -6,6 +6,13 @@ import util
 UPLOAD_FOLDER_FOR_QUESTIONS = 'static/images/questions/'
 UPLOAD_FOLDER_FOR_ANSWERS = 'static/images/answers/'
 
+def check_password_repeat(password, password_repeat):
+    return password == password_repeat
+
+def hash_password(user_input):
+    salt = bcrypt.gensalt()
+    hash = bcrypt.hashpw(user_input.encode(encoding="utf-8"), salt)
+    return hash.hex()
 
 @database.connection_handler
 def get_all_questions(cursor, order_by, order_direction):
