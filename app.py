@@ -338,7 +338,8 @@ def login():
 
 @app.route('/logout')
 def logout():
-    pass
+    session.clear()
+    return redirect('/')
 
 @app.route('/users')
 def users():
