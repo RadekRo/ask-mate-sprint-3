@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="question-list question-txt dflex justify-content-center">
+        <form action="/ask-question" method="POST" enctype="multipart/form-data" class="form">
+            <p>
+                <label for="title" class="form-txt">Login</label><br/>
+                <input id="login" class="form-control" name="title" type="text" value="" placeholder="Enter your login or email address"/>
+            </p>
+            <p>
+                <label class="form-txt" for="password">Password</label><br/>
+                <input id="password" class="form-control" name="password" type="password" value="" />
+            </p>
+            <p>
+                <label class="form-txt" for="repeat-password">Confirm password</label><br/>
+                <input id="repeat-password" class="form-control" name="repeat-password" type="password" value="" />
+            </p>
+            <p class="text-center">
+                <button class="btn btn-success" type="submit">Register</button>
+            </p>
+        </form>
+    </div>
+{% endblock %}

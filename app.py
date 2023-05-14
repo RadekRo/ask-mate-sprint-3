@@ -303,11 +303,11 @@ def search_questions_by_tag(tag_id):
 
 @app.route('/sign-in')
 def sign_in():
-    pass
+    return render_template('sign-in.html')
 
 @app.route('/login')
 def login():
-    pass
+    return render_template('login.html')
 
 @app.route('/logout')
 def logout():

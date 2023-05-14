@@ -24,7 +24,7 @@
                     </form>
                 </span>
                 <span>
-                    {% if session['email'] %}
+                    {% if session['username'] %}
                     <i class="fa-solid fa-user"></i> test@gmail.com <a href="{{url_for('logout')}}" class="btn btn-danger ms-3" role="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
                     {% else %}
                     <a href="{{url_for('login')}}" class="btn btn-dark" role="button"><i class="fa-solid fa-right-to-bracket"></i> Login</a>

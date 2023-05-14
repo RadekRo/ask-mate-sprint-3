@@ -98,3 +98,13 @@ header {
   font-size: 0.9em;
   text-align: right;
 }
+
+.form-txt {
+  font-size: 1.25em;
+  color: rgb(73, 73, 93);
+  margin-bottom: 1px;
+}
+
+.form {
+  margin: 0 25%;
+}
