@@ -303,7 +303,18 @@ def search_questions_by_tag(tag_id):
 
 @app.route('/sign-in')
 def sign_in():
-    return render_template('sign-in.html')
+    if request.method == 'GET':
+        return render_template('sign-in.html')
+    else:
+        password = request.form.get('password')
+        password_repeat = request.form.get('repeat-password')
+        if data_handler.check_password_repeat(password, password_repeat) == False:
+            return render_template('sign-in.html', error_message = 'Confirmed password incorrect! Sign-in rejected<br/>Try again!')
+        else:
+            login = request.form.get('login')
+            hashed_password = data_handler.hash_password(password)
+            data_handler.add_new_user(login, hashed_password)
+            return render_template('login.html', sign_in_message = 'Sign in completed, you can log in now!')
 
 @app.route('/login')
 def login():

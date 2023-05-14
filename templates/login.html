@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
+    {% if sign_in_message %}
+    <div class="text-center">
+        {{ sign_in_message }}
+    </div>
+    {% endif %}
     <div class="question-list question-txt dflex justify-content-center">
         <form action="/ask-question" method="POST" class="form">
             <p>

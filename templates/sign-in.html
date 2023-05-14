@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
+    {% if error_message %}
+    <div class="text-center">
+        {{ error_message }}
+    </div>
+    {% endif %}
     <div class="question-list question-txt dflex justify-content-center">
         <form action="/ask-question" method="POST" enctype="multipart/form-data" class="form">
             <p>
