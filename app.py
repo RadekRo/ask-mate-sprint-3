@@ -300,6 +300,20 @@ def search_questions_by_tag(tag_id):
                            search_result_number = search_result_number, 
                            all_question_tags = all_question_tags)
 
+
+@app.route('/sign-in')
+def sign_in():
+    pass
+
+@app.route('/login')
+def login():
+    pass
+
+@app.route('/logout')
+def logout():
+    pass
+
+
 if __name__ == '__main__':
     app.run()
 
