@@ -1,11 +1,13 @@
-from flask import Flask
+from flask import Flask, session
 from flask import render_template, request, redirect
 from datetime import datetime 
+import bcrypt
 
 import data_handler
 import util
 
 app = Flask(__name__)
+app.secret_key = bcrypt.gensalt()
 
 @app.route('/')
 def index():
@@ -333,6 +335,12 @@ def login():
 def logout():
     pass
 
+@app.route('/users')
+def users():
+    if session.get('username'):
+        pass
+    else:
+        return redirect('/')
 
 if __name__ == '__main__':
     app.run()
