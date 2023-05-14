@@ -33,6 +33,13 @@
                 </span>
             </div>
         </header>
+        {% if registration_message == "show" %}
+        <div class="block-content">
+            <p class="text-center text-white bg-success py-3 mb-3">
+                You have registered succesfully. You may log in now!
+            </p>
+        </div>
+        {% endif %}
         <div class="block-content">
             {% block content %}
             {% endblock %}

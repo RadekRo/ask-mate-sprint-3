@@ -9,6 +9,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    registration = request.args.get('registration')
+    if registration:
+        registration_message = 'show'    
+    else:
+        registration_message = 'hidden'
     number_of_latest_questions = 5
     latest_questions = data_handler.get_latest_questions(number_of_latest_questions)
     total_amount_of_questions = data_handler.get_questions_number()
@@ -17,7 +22,8 @@ def index():
                            latest_questions = latest_questions, 
                            total_amount_of_questions = total_amount_of_questions, 
                            all_question_tags = all_question_tags,
-                           number_of_latest_questions = number_of_latest_questions)
+                           number_of_latest_questions = number_of_latest_questions, 
+                           registration_message = registration_message)
 
 @app.route('/list')
 def route_list():
@@ -315,7 +321,7 @@ def sign_in():
             hashed_password = data_handler.hash_password(password)
             current_date = util.get_current_date()
             data_handler.add_new_user(login, hashed_password, current_date)
-            return redirect('/')
+            return redirect('/?registration=success')
 
 @app.route('/login', methods=["POST", "GET"])
 def login():
