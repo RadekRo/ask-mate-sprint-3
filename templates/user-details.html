@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+{% block content %}
+<h4>User's details</h4>
+<div style="width: 50%">
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>User ID:</td>
+                <td>{{ user_data['id'] }}</td>
+            </tr>
+            <tr>
+                <td>Username:</td>
+                <td>{{ user_data['login'] }}</td>
+            </tr>
+            <tr>
+                <td>Registration time:</td>
+                <td>{{ user_data['registration_date'] }}</td>
+            </tr>
+            <tr>
+                <td>Questions asked:</td>
+                <td>{{ user_data['num_questions'] }}</td>
+            </tr>
+            <tr>
+                <td>Answers given:</td>
+                <td>{{ user_data['num_answers'] }}</td>
+            </tr>
+            <tr>
+                <td>Comments:</td>
+                <td>{{ user_data['num_comments'] }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4>Questions asked</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Date
+                </th>
+                <th scope="col">
+                    Question's title
+                </th>
+                <th scope="col">
+                    Question's message
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in user_questions %}
+            <tr>
+                <td>{{ question.submission_time }}</td>
+                <td><a href="{{ url_for('route_question',id=question.id)}}" class="text-decoration-none">{{ question.title }}</a></td>
+                <td>{{ question.message }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<h4>Answers given</h4>
+    <table class="table table-striped w-auto">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Date
+                </th>
+                <th scope="col">
+                    Answer's message
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for answer in user_answers %}
+            <tr>
+                <td>{{ answer.submission_time }}</td>
+                <td>{{ answer.message }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

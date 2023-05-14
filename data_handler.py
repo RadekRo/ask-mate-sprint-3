@@ -25,7 +25,7 @@ def add_new_user(cursor, login:str, password:hex, current_date:str):
 @database.connection_handler
 def get_users_list(cursor):
     query = """
-        SELECT u.login, u.registration_date, 
+        SELECT u.id, u.login, u.registration_date, 
             COUNT(DISTINCT q.id) AS num_questions,
             COUNT(DISTINCT a.id) AS num_answers,
             COUNT(DISTINCT c.id) AS num_comments
@@ -36,6 +36,46 @@ def get_users_list(cursor):
         GROUP BY u.id;
        """
     cursor.execute(query)
+    return cursor.fetchall()
+
+@database.connection_handler
+def get_user_data(cursor, user_id):
+    query = """
+        SELECT u.id, u.login, u.registration_date, 
+            COUNT(DISTINCT q.id) AS num_questions,
+            COUNT(DISTINCT a.id) AS num_answers,
+            COUNT(DISTINCT c.id) AS num_comments
+        FROM users u
+        LEFT JOIN question q ON u.id = q.author
+        LEFT JOIN answer a ON u.id = a.author
+        LEFT JOIN comment c ON u.id = c.author
+        WHERE u.id = %(id)s
+        GROUP BY u.id;
+       """
+    data = {'id': user_id}
+    cursor.execute(query, data)
+    return cursor.fetchone()
+
+@database.connection_handler
+def get_user_questions(cursor, user_id):
+    query = """
+    SELECT id, submission_time, title, message
+    FROM question
+    WHERE author = %(user_id)s
+    """
+    data = {'user_id': user_id}
+    cursor.execute(query, data)
+    return cursor.fetchall()
+
+@database.connection_handler
+def get_user_answers(cursor, user_id):
+    query = """
+    SELECT id, submission_time, message 
+    FROM answer
+    WHERE author = %(user_id)s
+    """
+    data = {'user_id': user_id}
+    cursor.execute(query, data)
     return cursor.fetchall()
 
 @database.connection_handler

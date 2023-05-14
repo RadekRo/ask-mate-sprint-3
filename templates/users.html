@@ -24,7 +24,7 @@
         <tbody>
             {% for user in users_list %}
             <tr>
-                <td scope="row">{{ user['login'] }}</h>
+                <th scope="row"><a href="{{url_for('user_details', user_id=user['id'])}}" class="text-decoration-none text-dark">{{ user['login'] }}</a></th>
                 <td>{{ user['registration_date'] }}</td>
                 <td>{{ user['num_questions'] }}</td>
                 <td>{{ user['num_answers'] }}</td>

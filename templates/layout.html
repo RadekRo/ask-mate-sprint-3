@@ -25,7 +25,7 @@
                 </span>
                 <span>
                     {% if session['username'] %}
-                    <i class="fa-solid fa-circle-user"></i> {{ session['username'] }} <a href="{{url_for('users')}}" class="btn btn-info ms-3" role="button"><i class="fa-solid fa-users"></i> Users</a><a href="{{url_for('logout')}}" class="btn btn-danger ms-3" role="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                    <a href="{{url_for('user_details', user_id=session['userid'])}}" class="text-decoration-none text-dark"><i class="fa-solid fa-circle-user"></i> {{ session['username'] }}</a> <a href="{{url_for('users')}}" class="btn btn-info ms-3" role="button"><i class="fa-solid fa-users"></i> Users</a><a href="{{url_for('logout')}}" class="btn btn-danger ms-3" role="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
                     {% else %}
                     <a href="{{url_for('login')}}" class="btn btn-dark" role="button"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
                     <a href="{{url_for('sign_in')}}" class="btn btn-secondary" role="button"><i class="fa-solid fa-pen-to-square"></i> Sign in</a>
