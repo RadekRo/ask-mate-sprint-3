@@ -11,8 +11,8 @@ app.secret_key = bcrypt.gensalt()
 
 @app.route('/')
 def index():
-    session['username'] = 'radek'
-    session['userid'] = 7
+    #session['username'] = 'radek'
+    #session['userid'] = 7
     registration = request.args.get('registration')
     if registration:
         registration_message = 'show'    
