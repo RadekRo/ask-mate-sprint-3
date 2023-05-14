@@ -24,8 +24,12 @@
                     </form>
                 </span>
                 <span>
-                    <button class="btn btn-dark" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
-                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-pen-to-square"></i> Sign in</button>
+                    {% if session['email'] %}
+                    <i class="fa-solid fa-user"></i> test@gmail.com <a href="{{url_for('index', id = id)}}" class="btn btn-danger ms-3" role="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                    {% else %}
+                    <a href="{{url_for('index', id = id)}}" class="btn btn-dark" role="button"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+                    <a href="{{url_for('index', id = id)}}" class="btn btn-secondary" role="button"><i class="fa-solid fa-pen-to-square"></i> Sign in</a>
+                    {% endif %}
                 </span>
             </div>
         </header>
