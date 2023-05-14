@@ -314,10 +314,12 @@ def sign_in():
     else:
         password = request.form.get('password')
         password_repeat = request.form.get('repeat-password')
-        if data_handler.check_password_repeat(password, password_repeat) == False:
-            return render_template('registration.html', error_message = 'Confirmed password incorrect! Sign-in rejected<br/>Try again!')
+        if data_handler.check_password_repeat(password, password_repeat) == False or not password:
+            return render_template('registration.html', error_message = 'Confirmed password incorrect or empty password entered!<br/>Sign-in rejected. Try again!')
         else:
             login = request.form.get('login')
+            if not login:
+                return render_template('registration.html', error_message = 'Empty login field!<br/>Sign-in rejected. Try again!')
             hashed_password = data_handler.hash_password(password)
             current_date = util.get_current_date()
             data_handler.add_new_user(login, hashed_password, current_date)
