@@ -1,4 +1,34 @@
 {% extends "layout.html" %}
 {% block content %}
-    TABLE OF USERS
+<h4>Users list</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Username
+                </th>
+                <th scope="col">
+                    Registration date
+                </th>
+                <th scope="col">
+                    Question asked
+                </th>
+                <th scope="col">
+                    Answers given
+                </th>
+                <th scope="col">
+                    Comments
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td scope="row">name</h>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+                <td>@fat</td>
+            </tr>
+        </tbody>
+    </table>
 {% endblock %}
