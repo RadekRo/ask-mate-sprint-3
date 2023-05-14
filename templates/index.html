@@ -27,6 +27,13 @@
         <p class="question-title"><a href="{{ url_for('route_question',id=question.id)}}" class="text-decoration-none">{{question.title}}</a></p>
         <p class="question-message">{{question.message}}</p>
         <p class="question-date"><i class="fa-regular fa-calendar-days"></i> Posted: {{question.submission_time}}</p>
+        <p class="question-date">
+            {% if question.author_name == None %}
+                Posted by <b><i>guest</i></b>    
+            {% else %}
+                Posted by <i class="fa-solid fa-user"></i> <b><i>{{ question.author_name }}</i></b>
+            {% endif %}
+        </p>
         <p>
             {% for tag in all_question_tags %}
                 {% if tag.question_id == question.id %}

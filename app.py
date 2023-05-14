@@ -12,6 +12,7 @@ app.secret_key = bcrypt.gensalt()
 @app.route('/')
 def index():
     session['username'] = 'radek'
+    session['userid'] = 7
     registration = request.args.get('registration')
     if registration:
         registration_message = 'show'    
@@ -65,12 +66,15 @@ def ask_question():
     
     if request.method == 'GET':
         return render_template('ask-question.html')
-    
+    if session.get('userid'):
+        author = session['userid']
+    else:
+        author = 0
     file_name = request.files['file']
     image = data_handler.save_question_image(file_name)
     your_question = dict(request.form)
     current_date = util.get_current_date()
-    data_handler.add_question(current_date, your_question, image)
+    data_handler.add_question(current_date, your_question, image, author)
     return redirect('/list')
 
 @app.route('/question/<id>/new-answer')

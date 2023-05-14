@@ -45,7 +45,8 @@ def get_all_questions(cursor, order_by, order_direction):
             SELECT id, submission_time, view_number, vote_number, title, message, 
             COALESCE((SELECT COUNT(answer.question_id)
             FROM answer 
-            WHERE answer.question_id = question.id GROUP by answer.question_id), 0) as answer_number
+            WHERE answer.question_id = question.id GROUP by answer.question_id), 0) as answer_number, 
+            (SELECT login FROM users WHERE id = question.author) as author_name
             FROM question
             ORDER BY {} DESC
             """.format(order_by)
@@ -81,7 +82,8 @@ def get_latest_questions(cursor, number_of_questions:int):
         COALESCE((SELECT COUNT(answer.question_id)
         FROM answer 
         WHERE answer.question_id = question.id 
-        GROUP by answer.question_id), 0) as answer_number
+        GROUP by answer.question_id), 0) as answer_number,
+        (SELECT login FROM users WHERE id = question.author) as author_name
         FROM question
         ORDER BY submission_time DESC 
         LIMIT %(question_number)s;
@@ -198,13 +200,13 @@ def edit_answer(cursor, current_date:str, answer_message:str, answer_id):
 
 
 @database.connection_handler
-def add_question(cursor, current_date:str, your_question:dict, image:str):
+def add_question(cursor, current_date:str, your_question:dict, image:str, author:int):
     try:
         query = """
-            INSERT INTO question (submission_time, title, message, image) 
-            VALUES (%(date)s, %(title)s, %(message)s, %(image)s)
+            INSERT INTO question (submission_time, title, message, image, author) 
+            VALUES (%(date)s, %(title)s, %(message)s, %(image)s, %(author)s)
         """
-        data = {'date': current_date, 'title': your_question['title'], 'message': your_question['message'], 'image': image}
+        data = {'date': current_date, 'title': your_question['title'], 'message': your_question['message'], 'image': image, 'author': author}
         cursor.execute(query, data)
     except:
         raise ValueError("Wrong values types provided for database input.")
