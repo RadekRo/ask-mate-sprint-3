@@ -15,6 +15,31 @@ def hash_password(user_input):
     return hash.hex()
 
 @database.connection_handler
+def check_if_user_exists(cursor, login:str):
+    query = f"""
+    SELECT login
+    FROM users
+    WHERE login = '{login}'
+    """
+    cursor.execute(query)
+    return cursor.fetchone()
+
+@database.connection_handler
+def get_password_from_base(cursor, login):
+    query = """
+    SELECT password
+    FROM users
+    WHERE login = %(login)s
+    """
+    data = {'login': login}
+    cursor.execute(query, data)
+    return cursor.fetchone()
+
+def check_password(password:str, password_from_base:hex):
+    password_bytes = bytes.fromhex(password_from_base)
+    return bcrypt.checkpw(password.encode(encoding="utf-8"), password_bytes)
+
+@database.connection_handler
 def add_new_user(cursor, login:str, password:hex, current_date:str):
     query = """
           INSERT INTO users (login, password, registration_date) 

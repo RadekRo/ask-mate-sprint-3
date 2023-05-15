@@ -3,6 +3,9 @@
 <div class="container">
     <div class="questions-list">
         <span class="questions-list-header"><h4>Latest Questions ({{number_of_latest_questions}})</h4></span>
+        {%if login_message%}
+        {{login_message}} as {{user}}
+        {%endif%}<br>
         <form action="/ask-question">
             <span><button type="submit" class="btn btn-primary">Ask Question</button></span>
         </form>

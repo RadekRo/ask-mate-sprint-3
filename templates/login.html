@@ -2,6 +2,9 @@
 {% block content %}
     <div class="question-list question-txt dflex justify-content-center">
         <form action="/login" method="POST" class="form">
+        {%if login_error_message%}
+            {{login_error_message}}
+        {%endif%}<br>
             <p>
                 <label for="title" class="form-txt">Login</label><br/>
                 <input id="login" class="form-control" name="title" type="text" value="" />

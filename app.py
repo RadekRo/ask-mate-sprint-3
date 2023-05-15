@@ -334,6 +334,21 @@ def sign_in():
 
 @app.route('/login', methods=["POST", "GET"])
 def login():
+    if request.method == "POST":
+        login = request.form.get('login')
+        password = request.form.get('password')
+        # print(login)
+        data_handler.check_if_user_exists(login)
+        # print(check)
+        password_from_base = data_handler.get_password_from_base(login)
+        check_password = data_handler.check_password(password, password_from_base)
+        if check_password == True:
+            session['username'] = login
+            return render_template("index.html", login_success_message='You are successfully logged in')
+        else:
+            return render_template("login.html", login_error_message='You have entered wrong login or password')
+    else:
+        return render_template("login.html", login_error_message='You have entered wrong login or password')
     return render_template('login.html')
 
 @app.route('/logout')
