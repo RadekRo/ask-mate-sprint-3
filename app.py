@@ -340,8 +340,8 @@ def login():
         data_handler.check_if_user_exists(login)
         password_from_base = data_handler.get_password_from_base(login)
         check_password = data_handler.check_password(password, password_from_base['password'])
-        user_id = data_handler.get_user_id(login)
         if check_password == True:
+            user_id = data_handler.get_user_id(login)
             session['username'] = login
             session['userid'] = user_id['id']
             return redirect('/')
