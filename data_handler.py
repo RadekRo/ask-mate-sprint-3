@@ -40,6 +40,17 @@ def check_password(password:str, password_from_base:hex):
     return bcrypt.checkpw(password.encode(encoding="utf-8"), password_bytes)
 
 @database.connection_handler
+def get_user_id(cursor, login):
+    query = """
+        SELECT id
+        FROM users
+        WHERE login = %(login)s
+        """
+    data = {'login': login}
+    cursor.execute(query, data)
+    return cursor.fetchone()
+
+@database.connection_handler
 def add_new_user(cursor, login:str, password:hex, current_date:str):
     query = """
           INSERT INTO users (login, password, registration_date) 
