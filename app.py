@@ -168,9 +168,15 @@ def add_comment_question(id):
 
     if request.method == 'GET':
         return render_template('new-comment.html', id = id)
+    if session.get('userid'):
+        author = session['userid']
+        print(author)
+    else:
+        author = 0
+
     if request.method == 'POST':
         question_comment = request.form.get('message')
-        data_handler.add_comment_question(question_comment, id)
+        data_handler.add_comment_question(question_comment, id, author)
         redirect_dir = "/question/" + id
         return redirect(redirect_dir)
 

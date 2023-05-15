@@ -222,7 +222,8 @@ def get_answers(cursor, question_id):
 @database.connection_handler
 def get_comments_question(cursor, question_id):
     query = """
-        SELECT id, question_id, message, submission_time, edited_number
+        SELECT id, question_id, message, submission_time, edited_number, author,
+        (SELECT login FROM users WHERE id = comment.author) as author_name
         FROM comment
         WHERE question_id = %(id)s
         ORDER by id ASC
@@ -335,12 +336,12 @@ def add_answer(cursor, current_date, your_answer:dict, image:str, author:int):
 
 
 @database.connection_handler
-def add_comment_question(cursor, question_comment, id:int):
+def add_comment_question(cursor, question_comment, id:int, author):
     current_date = util.get_current_date()
     query = """
-          INSERT INTO comment (question_id, message, submission_time) 
-          VALUES (%(id)s, %(comment)s, %(date)s); """
-    data = {'id': id, 'comment': question_comment, 'date': current_date}
+          INSERT INTO comment (question_id, message, submission_time, author) 
+          VALUES (%(id)s, %(comment)s, %(date)s, %(author)s); """
+    data = {'id': id, 'comment': question_comment, 'date': current_date, 'author': author}
     cursor.execute(query, data)
 
 
