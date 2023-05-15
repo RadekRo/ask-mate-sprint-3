@@ -13,6 +13,7 @@ app.secret_key = bcrypt.gensalt()
 def index():
     #session['username'] = 'radek'
     #session['userid'] = 7
+    logout = request.args.get('logout')
     registration = request.args.get('registration')
     if registration:
         registration_message = 'show'    
@@ -27,7 +28,8 @@ def index():
                            total_amount_of_questions = total_amount_of_questions, 
                            all_question_tags = all_question_tags,
                            number_of_latest_questions = number_of_latest_questions, 
-                           registration_message = registration_message)
+                           registration_message = registration_message, 
+                           logout = logout)
 
 @app.route('/list')
 def route_list():
@@ -353,7 +355,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect('/')
+    return redirect('/?logout=user')
 
 @app.route('/users')
 def users():
