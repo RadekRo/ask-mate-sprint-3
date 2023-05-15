@@ -16,12 +16,13 @@ def hash_password(user_input):
 
 @database.connection_handler
 def check_if_user_exists(cursor, login:str):
-    query = f"""
+    query = """
     SELECT login
     FROM users
-    WHERE login = '{login}'
+    WHERE login = %(login)s
     """
-    cursor.execute(query)
+    data = {'login': login}
+    cursor.execute(query, data)
     return cursor.fetchone()
 
 @database.connection_handler
