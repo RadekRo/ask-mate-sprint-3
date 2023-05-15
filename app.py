@@ -170,7 +170,6 @@ def add_comment_question(id):
         return render_template('new-comment.html', id = id)
     if session.get('userid'):
         author = session['userid']
-        print(author)
     else:
         author = 0
 
@@ -199,11 +198,20 @@ def route_answer_substract_vote(answer_id):
 @app.route('/answer/<answer_id>/new-comment_answer',  methods=["POST", "GET"])
 def route_comment_answer(answer_id):
     id = request.args.get('id')
+
+    if request.method == 'GET':
+        return render_template('new-comment_answer.html', id = id, answer_id = answer_id)
+    if session.get('userid'):
+        author = session['userid']
+    else:
+        author = 0
+    
     if request.method == "POST":
         id = request.form.get('question_id')
         answer_comment = request.form.get('message')
         answer_id = request.form.get('answer_id')
-        data_handler.add_comment_answer(answer_comment, answer_id)
+        print(answer_id)
+        data_handler.add_comment_answer(answer_comment, answer_id, author)
         redirect_dir = "/question/" + id
         return redirect(redirect_dir)
     return render_template("new-comment_answer.html", 

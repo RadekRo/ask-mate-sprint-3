@@ -236,7 +236,8 @@ def get_comments_question(cursor, question_id):
 @database.connection_handler
 def get_comments_answer(cursor):
     query = """
-    SELECT comment.answer_id, comment.id, comment.message, comment.submission_time, edited_number
+    SELECT comment.answer_id, comment.id, comment.message, comment.submission_time, edited_number,
+    (SELECT login FROM users WHERE id = comment.author) as author_name
     FROM comment
     INNER JOIN answer ON answer.id = comment.answer_id;
        """
@@ -346,12 +347,12 @@ def add_comment_question(cursor, question_comment, id:int, author):
 
 
 @database.connection_handler
-def add_comment_answer(cursor, answer_comment, answer_id:int):
+def add_comment_answer(cursor, answer_comment, answer_id:int, author):
     current_date = util.get_current_date()
     query = """
-          INSERT INTO comment (answer_id, message, submission_time) 
-          VALUES (%(id)s, %(comment)s, %(date)s); """
-    data = {'id': answer_id, 'comment': answer_comment, 'date': current_date}
+          INSERT INTO comment (answer_id, message, submission_time, author) 
+          VALUES (%(id)s, %(comment)s, %(date)s, %(author)s); """
+    data = {'id': answer_id, 'comment': answer_comment, 'date': current_date, 'author': author}
     cursor.execute(query, data)
 
 

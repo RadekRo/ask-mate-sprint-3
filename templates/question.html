@@ -126,7 +126,7 @@ class="container ms-0">
                 <a href="{{ url_for('route_edit_comment', comment_id=comment.id, id=question.id)}}" class="link-success px-1"><i class="fa-solid fa-pen-to-square"></i></a>
                 <span class="text-info">Edited: {{comment.edited_number}} time(s)</span>
                 <a href="{{ url_for('route_delete_comment', comment_id=comment.id, id=question.id)}}" class="link-danger px-1"><i class="fa-solid fa-trash-can"></i></a>
-                {% if answer.author_name == None %}
+                {% if comment.author_name == None %}
                     Posted by <b><i>guest</i></b>    
                 {% else %}
                     Posted by <i class="fa-solid fa-user"></i> <b><i>{{ comment.author_name }}</i></b>
