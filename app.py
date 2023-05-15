@@ -348,8 +348,6 @@ def login():
             #return render_template("index.html", login_success_message='You are successfully logged in')
         else:
             return render_template("login.html", login_error_message='You have entered wrong login or password')
-    else:
-        return render_template("login.html", login_error_message='You have entered wrong login or password')
     return render_template('login.html')
 
 @app.route('/logout')
