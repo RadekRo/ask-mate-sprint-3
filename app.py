@@ -14,6 +14,7 @@ def index():
     #session['username'] = 'radek'
     #session['userid'] = 7
     logout = request.args.get('logout')
+    login = request.args.get('login')
     registration = request.args.get('registration')
     if registration:
         registration_message = 'show'    
@@ -29,7 +30,8 @@ def index():
                            all_question_tags = all_question_tags,
                            number_of_latest_questions = number_of_latest_questions, 
                            registration_message = registration_message, 
-                           logout = logout)
+                           logout = logout,
+                           login = login)
 
 @app.route('/list')
 def route_list():
@@ -346,7 +348,7 @@ def login():
             user_id = data_handler.get_user_id(login)
             session['username'] = login
             session['userid'] = user_id['id']
-            return redirect('/')
+            return redirect('/?login=user')
             #return render_template("index.html", login_success_message='You are successfully logged in')
         else:
             return render_template("login.html", login_error_message='You have entered wrong login or password')

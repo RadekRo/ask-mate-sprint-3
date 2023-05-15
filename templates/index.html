@@ -5,6 +5,11 @@
         Logged out! Thank you!
     </div>
 {% endif %}
+{% if login %}
+    <div class="text-center text-white bg-success py-3 mb-3">
+        Logged in! Welcome!
+    </div>
+{% endif %}
 <div class="container">
     <div class="questions-list">
         <span class="questions-list-header"><h4>Latest Questions ({{number_of_latest_questions}})</h4></span>
