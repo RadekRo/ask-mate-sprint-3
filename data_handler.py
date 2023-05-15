@@ -208,7 +208,8 @@ def get_answer(cursor, answer_id):
 @database.connection_handler
 def get_answers(cursor, question_id):
     query = """
-        SELECT id, submission_time, vote_number, question_id, message, image
+        SELECT id, submission_time, vote_number, question_id, message, image, author, 
+        (SELECT login FROM users WHERE id = answer.author) as author_name
         FROM answer
         WHERE question_id = %(id)s
         ORDER by id DESC
@@ -321,13 +322,13 @@ def save_answer_image(file):
 
 
 @database.connection_handler
-def add_answer(cursor, current_date, your_answer:dict, image:str):
+def add_answer(cursor, current_date, your_answer:dict, image:str, author:int):
     try:
         query = """
-            INSERT INTO answer (submission_time, question_id, message, image) 
-            VALUES (%(date)s, %(id)s, %(message)s, %(image)s)
+            INSERT INTO answer (submission_time, question_id, message, image, author) 
+            VALUES (%(date)s, %(id)s, %(message)s, %(image)s, %(author)s)
         """
-        data = {'date': current_date, 'id': your_answer["question_id"], 'message': your_answer["message"], 'image': image}
+        data = {'date': current_date, 'id': your_answer["question_id"], 'message': your_answer["message"], 'image': image, 'author': author}
         cursor.execute(query, data)
     except:
         raise ValueError("Wrong values types provided for database input.")

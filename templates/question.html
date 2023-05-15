@@ -103,7 +103,13 @@ class="container ms-0">
         Answered: {{answer.submission_time}}
         <h5><i class="fa-sharp fa-solid fa-square-poll-vertical text-info"></i> <a href="{{ url_for('route_answer_substract_vote', answer_id=answer.id, question_id = question.id)}}"><i class="fa-solid fa-circle-minus text-danger"></i></a><span class="px-2">{{answer.vote_number}}</span><a href="{{ url_for('route_answer_add_vote', answer_id=answer.id, question_id = question.id)}}"><i class="fa-solid fa-circle-plus text-success"></i></a></h5>
     </div>
-
+    <p class="question-date">
+    {% if answer.author_name == None %}
+        Posted by <b><i>guest</i></b>    
+    {% else %}
+        Posted by <i class="fa-solid fa-user"></i> <b><i>{{ answer.author_name }}</i></b>
+    {% endif %}
+    </p>
     <div id="answer-comments">
         {% for comment in comments_answer %}
             {% if comment.answer_id == answer.id %}

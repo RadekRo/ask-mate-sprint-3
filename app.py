@@ -209,12 +209,16 @@ def new_answer():
 
     if request.method == 'GET':
         return render_template("new-answer.html")
+    if session.get('userid'):
+        author = session['userid']
+    else:
+        author = 0
 
     file_name = request.files['file']
     image = data_handler.save_answer_image(file_name)
     your_answer = dict(request.form)
     current_date = util.get_current_date()
-    data_handler.add_answer(current_date, your_answer, image)
+    data_handler.add_answer(current_date, your_answer, image, author)
     redirect_dir = "/question/" + your_answer['question_id']
     return redirect(redirect_dir)
 
