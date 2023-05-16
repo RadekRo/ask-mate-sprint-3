@@ -184,7 +184,8 @@ def get_all_question_tags(cursor):
 @database.connection_handler
 def get_question(cursor, id):
     query = """
-        SELECT id, submission_time, view_number, vote_number, title, message, image, author
+        SELECT id, submission_time, view_number, vote_number, title, message, image, author, 
+        (SELECT login FROM users WHERE id = question.author) as author_name
         FROM question
         WHERE id = %(id)s
        """

@@ -11,7 +11,7 @@ class="container">
         <span class="questions-list-header">
             <h4>{{question.title}}</h4>
             <h5><i class="fa-sharp fa-solid fa-square-poll-vertical text-secondary"></i> <a href="{{ url_for('question_vote_substract', id=question.id)}}"><i class="fa-solid fa-circle-minus text-danger"></i></a><span class="px-2">{{question.vote_number}}</span><a href="{{ url_for('question_vote_add', id=question.id)}}"><i class="fa-solid fa-circle-plus text-success"></i></a></h5>
-            <h7><i class="fa-regular fa-calendar-days"></i> {{question.submission_time}} <br/><i class="fa-regular fa-eye"></i> {{question.view_number}}</h7>
+            <h7><i class="fa-regular fa-calendar-days"></i> {{question.submission_time}} <br/><i class="fa-regular fa-eye"></i> {{question.view_number}}</h7><span><h6><i class="fa-regular fa-keyboard"></i> Posted by {% if question.author > 0 %}<i class="fa-solid fa-user"></i> <i>{{ question.author_name }}</i>{% else %} <i class="text-secondary">guest</i>{% endif %}</h6></span>
         </span>
         <form action="/ask-question">
             <span>
