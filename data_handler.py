@@ -593,3 +593,23 @@ def add_markups_to_questions(questions_list, searching_phrase):
         question['title'] = question['title'].replace(searching_phrase, '<mark>' + searching_phrase + '</mark>')
         question['message'] = question['message'].replace(searching_phrase, '<mark>' + searching_phrase + '</mark>')
     return questions_list
+
+@database.connection_handler
+def accept_answer(cursor, answer_id):
+    query = """
+    UPDATE answer 
+    SET acceptance = 1
+    WHERE id = %(answer_id)s
+    """
+    data = {'answer_id': answer_id}
+    cursor.execute(query, data)
+
+@database.connection_handler
+def unaccept_answer(cursor, answer_id):
+    query = """
+    UPDATE answer 
+    SET acceptance = 0
+    WHERE id = %(answer_id)s
+    """
+    data = {'answer_id': answer_id}
+    cursor.execute(query, data)

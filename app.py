@@ -336,6 +336,19 @@ def search_questions_by_tag(tag_id):
                            all_question_tags = all_question_tags)
 
 
+@app.route('/answer/accept/<answer_id>')
+def accept_answer(answer_id):
+    data_handler.accept_answer(answer_id)
+    question_id = request.args.get('question_id')
+    return redirect('/question/' + question_id)
+
+@app.route('/answer/unaccept/<answer_id>')
+def unaccept_answer(answer_id):
+    data_handler.unaccept_answer(answer_id)
+    question_id = request.args.get('question_id')
+    return redirect('/question/' + question_id)
+
+
 @app.route('/registration', methods=["POST", "GET"])
 def sign_in():
     if request.method == 'GET':
