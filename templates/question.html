@@ -87,14 +87,18 @@ class="answers-header container bg-light py-2 d-flex justify-content-between">
 {% for answer in answers %}
 <div id="answer" 
 class="container ms-0">
-
+    {% if question.author == session['userid'] %}
+    {% endif %}
     <div id="answer-message" 
     class="container my-2 py-2">
+        <div class="bg-light shadow rounded px-2 py-2 mb-3 text-success"><i class="fa-solid fa-angles-down"></i> Below answer was accepted by the question's author</div>
         {{answer.message}}
         <div class="mt-3" id="answer-tools">
             <i class="fa-solid fa-ellipsis-vertical mx-1"></i>
             <a href="{{ url_for('route_edit_answer', answer_id=answer.id, id=question.id)}}" title="Edit answer" class="btn btn-outline-success btn-sm" role="button"><i class="fa-solid fa-pen-to-square"></i></a>
             <a href="{{ url_for('route_delete_answer',answer_id=answer.id, id=question.id)}}" class="btn btn-outline-danger btn-sm" role="button"><i class="fa-solid fa-trash-can"></i></a>
+            <a href="{{ url_for('route_delete_answer',answer_id=answer.id, id=question.id)}}" class="btn btn-outline-success btn-sm" role="button"><i class="fa-solid fa-clipboard-check"></i> Accept</a>
+            <a href="{{ url_for('route_delete_answer',answer_id=answer.id, id=question.id)}}" class="btn btn-outline-danger btn-sm" role="button"><i class="fa-solid fa-file-circle-minus"></i> Cancel acceptance</a>
         </div>
     </div>
 
