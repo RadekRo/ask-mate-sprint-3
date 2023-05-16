@@ -42,7 +42,7 @@
         <p class="question-date"><i class="fa-regular fa-calendar-days"></i> Posted: {{question.submission_time}}</p>
         <p class="question-date">
             {% if question.author_name == None %}
-                Posted by <b><i>guest</i></b>    
+                Posted by <span class="text-secondary"><b><i>guest</i></b></span>    
             {% else %}
                 Posted by <i class="fa-solid fa-user"></i> <b><i>{{ question.author_name }}</i></b>
             {% endif %}

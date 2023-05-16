@@ -64,7 +64,7 @@ class="container my-3">
         <span class="text-info">Edited: {{comment.edited_number}} time(s)</span>
         <a href="{{ url_for('route_delete_comment', comment_id=comment.id, id=question.id)}}" class="link-danger"><i class="fa-solid fa-trash-can"></i></a>
 {% if comment.author_name == None %}
-    Posted by <b><i>guest</i></b>    
+    Posted by <span class="text-secondary"><b><i>guest</i></b></span>    
 {% else %}
     Posted by <i class="fa-solid fa-user"></i> <b><i>{{ comment.author_name }}</i></b>
 {% endif %}
@@ -112,7 +112,7 @@ class="container ms-0">
     </div>
     <p class="question-date">
     {% if answer.author_name == None %}
-        Posted by <b><i>guest</i></b>    
+        Posted by <span class="text-secondary"><b><i>guest</i></b></span>    
     {% else %}
         Posted by <i class="fa-solid fa-user"></i> <b><i>{{ answer.author_name }}</i></b>
     {% endif %}
@@ -127,7 +127,7 @@ class="container ms-0">
                 <span class="text-info">Edited: {{comment.edited_number}} time(s)</span>
                 <a href="{{ url_for('route_delete_comment', comment_id=comment.id, id=question.id)}}" class="link-danger px-1"><i class="fa-solid fa-trash-can"></i></a>
                 {% if comment.author_name == None %}
-                    Posted by <b><i>guest</i></b>    
+                    Posted by <span class="text-secondary"><b><i>guest</i></b></span>    
                 {% else %}
                     Posted by <i class="fa-solid fa-user"></i> <b><i>{{ comment.author_name }}</i></b>
                 {% endif %}
