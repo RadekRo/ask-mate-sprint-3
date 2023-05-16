@@ -32,7 +32,7 @@ class="container">
         <i class="fa-solid fa-pen-to-square"></i> Edit</a>
         <a href="{{ url_for('delete_question', id=question.id)}}" class="btn btn-outline-danger btn-sm" role="button"><i class="fa-solid fa-trash-can"></i> Delete</a>
         {% if answers|length > 0 %}
-            <span class="text-secondary"><i class="fa-solid fa-circle-info px-2"></i>Editon disabled. Question was allready answered.</span>
+            <span class="text-secondary"><i class="fa-solid fa-circle-info px-2"></i>Editon disabled. Question was already answered.</span>
         {% endif %}
 </div>
 
