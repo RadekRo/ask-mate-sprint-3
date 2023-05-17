@@ -3,12 +3,24 @@
     <b class="comment-title-answer">EDIT ANSWER</b><br/>
     <form action="/answer/{{answer_id}}/edit_answer" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" value="{{id}}">
+        <input type="hidden" name="answer_image" value="{{answer.image}}"/>
     Submitted: {{answer.submission_time}}<br/>
     <p>
         <label for="message">Message:</label><br/>
         <textarea id="message" name="message" rows="4" cols="50">{{answer.message}}</textarea>
     </p>
-    
+    <p>
+        <label class="add-img" for="image">Image (only jpg files allowed):</label><br/>
+        <input class="add-img" id="file" name="file" type = "file" /><br />
+        {% if answer.image != "no-image" %}
+            Warning! If you will choose a new file, the old file will be overwritten!
+        {% endif %}
+    </p>
+    {% if answer.image != "no-image" %}
+    <p>
+        <img src="/{{answer.image}}" style="max-width: 150px" />
+    </p>
+    {% endif %}
     <button class="add-your-answer" type="submit">Edit your answer</button>
     <form action="{{url_for('route_question', id = id)}}" enctype="multipart/form-data">
         <button class="add-your-answer" type="submit">Go back</button>

@@ -11,8 +11,6 @@ app.secret_key = bcrypt.gensalt()
 
 @app.route('/')
 def index():
-    #session['username'] = 'radek'
-    #session['userid'] = 7
     logout = request.args.get('logout')
     login = request.args.get('login')
     registration = request.args.get('registration')
@@ -255,9 +253,13 @@ def route_edit_answer(answer_id):
 def edit_answer(answer_id):
     if request.method == "POST":
         id = request.form.get('id')
+        answer_image = request.form.get('answer_image')
+        file_name = request.files['file']
+        image = data_handler.update_answer_image(file_name, answer_image)
+        updated_image = image
         current_date = util.get_current_date()
         answer = str(request.form.get('message'))
-        data_handler.edit_answer(current_date, answer, answer_id)
+        data_handler.edit_answer(current_date, answer, answer_id, image)
         redirect_dir = "/question/" + id
         return redirect(redirect_dir)
     return redirect('/')
@@ -382,17 +384,18 @@ def login():
     if request.method == "POST":
         login = request.form.get('login')
         password = request.form.get('password')
-        data_handler.check_if_user_exists(login)
-        password_from_base = data_handler.get_password_from_base(login)
-        check_password = data_handler.check_password(password, password_from_base['password'])
-        if check_password == True:
-            user_id = data_handler.get_user_id(login)
-            session['username'] = login
-            session['userid'] = user_id['id']
-            return redirect('/?login=user')
-            #return render_template("index.html", login_success_message='You are successfully logged in')
+        if data_handler.check_if_user_exists(login):
+            password_from_base = data_handler.get_password_from_base(login)
+            check_password = data_handler.check_password(password, password_from_base['password'])
+            if check_password == True:
+                user_id = data_handler.get_user_id(login)
+                session['username'] = login
+                session['userid'] = user_id['id']
+                return redirect('/?login=user')
+            else:
+                return render_template("login.html", login_error_message='You have entered wrong login or password')
         else:
-            return render_template("login.html", login_error_message='You have entered wrong login or password')
+            return render_template("login.html", login_error_message='You have entered wrong login or password')   
     return render_template('login.html')
 
 @app.route('/logout')

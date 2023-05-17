@@ -272,13 +272,13 @@ def edit_comment(cursor, current_date:str, comment_message:str, comment_id):
 
 
 @database.connection_handler
-def edit_answer(cursor, current_date:str, answer_message:str, answer_id):
+def edit_answer(cursor, current_date:str, answer_message:str, answer_id, answer_image):
     query = """
     UPDATE answer 
-    SET (message, submission_time) = (%(message)s, %(date)s)
+    SET (message, submission_time, image) = (%(message)s, %(date)s, %(image)s)
     WHERE id = %(id)s    
     """
-    data = {'message': answer_message, 'date': current_date, 'id': answer_id}
+    data = {'message': answer_message, 'date': current_date, 'id': answer_id, 'image': answer_image}
     cursor.execute(query, data)
 
 
@@ -312,6 +312,16 @@ def update_question_image(file, image):
         file_name_with_extension =  file_name + ".jpg"
         file.save(os.path.join(UPLOAD_FOLDER_FOR_QUESTIONS, file_name_with_extension))
         return UPLOAD_FOLDER_FOR_QUESTIONS + file_name_with_extension
+    else:
+        return image
+    
+def update_answer_image(file, image):
+    if file.filename != "":
+        image != "no-image" and os.remove(image)
+        file_name = util.get_unique_file_name()
+        file_name_with_extension =  file_name + ".jpg"
+        file.save(os.path.join(UPLOAD_FOLDER_FOR_ANSWERS, file_name_with_extension))
+        return UPLOAD_FOLDER_FOR_ANSWERS + file_name_with_extension
     else:
         return image
 
