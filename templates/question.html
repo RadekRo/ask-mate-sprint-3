@@ -23,17 +23,19 @@ class="container">
 
 <div id="question-tools" 
 class="container">
-    <i class="fa-solid fa-ellipsis-vertical mx-1"></i>
-        {% if answers|length > 0 %}
-            <a class="btn btn-outline-success btn-sm disabled" role="button">
-        {% else %}
-            <a href="{{ url_for('edit_question', id=question.id)}}" class="btn btn-outline-success btn-sm" role="button">
-        {% endif %}
-        <i class="fa-solid fa-pen-to-square"></i> Edit</a>
-        <a href="{{ url_for('delete_question', id=question.id)}}" class="btn btn-outline-danger btn-sm" role="button"><i class="fa-solid fa-trash-can"></i> Delete</a>
-        {% if answers|length > 0 %}
-            <span class="text-secondary"><i class="fa-solid fa-circle-info px-2"></i>Editon disabled. Question was already answered.</span>
-        {% endif %}
+    {% if question.author == session['userid'] %}
+        <i class="fa-solid fa-ellipsis-vertical mx-1"></i>
+            {% if answers|length > 0 %}
+                <a class="btn btn-outline-success btn-sm disabled" role="button">
+            {% else %}
+                <a href="{{ url_for('edit_question', id=question.id)}}" class="btn btn-outline-success btn-sm" role="button">
+            {% endif %}
+            <i class="fa-solid fa-pen-to-square"></i> Edit</a>
+            <a href="{{ url_for('delete_question', id=question.id)}}" class="btn btn-outline-danger btn-sm" role="button"><i class="fa-solid fa-trash-can"></i> Delete</a>
+            {% if answers|length > 0 %}
+                <span class="text-secondary"><i class="fa-solid fa-circle-info px-2"></i>Editon disabled. Question was already answered.</span>
+            {% endif %}
+    {% endif %}
 </div>
 
 <div id="question-message" 
@@ -60,9 +62,13 @@ class="container my-3">
 <div id="question-comment" 
     class="container border-top px-5 py-2 comment-message">
         {{ comment.message }} - <span class="text-info">{{comment.submission_time}}</span> 
-        <a href="{{ url_for('route_edit_comment', comment_id=comment.id, id=question.id)}}" class="link-success px-1"><i class="fa-solid fa-pen-to-square"></i></a>
+        {% if comment.author == session['userid'] %}
+            <a href="{{ url_for('route_edit_comment', comment_id=comment.id, id=question.id)}}" class="link-success px-1"><i class="fa-solid fa-pen-to-square"></i></a>
+        {% endif %}
         <span class="text-info">Edited: {{comment.edited_number}} time(s)</span>
-        <a href="{{ url_for('route_delete_comment', comment_id=comment.id, id=question.id)}}" class="link-danger"><i class="fa-solid fa-trash-can"></i></a>
+        {% if comment.author == session['userid'] %}
+            <a href="{{ url_for('route_delete_comment', comment_id=comment.id, id=question.id)}}" class="link-danger"><i class="fa-solid fa-trash-can"></i></a>
+        {% endif %}
 {% if comment.author_name == None %}
     Posted by <span class="text-secondary"><b><i>guest</i></b></span>    
 {% else %}
@@ -94,14 +100,16 @@ class="container ms-0">
         {% endif %}
         {{answer.message}}
         <div class="mt-3" id="answer-tools">
-            <i class="fa-solid fa-ellipsis-vertical mx-1"></i>
-            <a href="{{ url_for('route_edit_answer', answer_id=answer.id, id=question.id)}}" title="Edit answer" class="btn btn-outline-success btn-sm" role="button"><i class="fa-solid fa-pen-to-square"></i></a>
-            <a href="{{ url_for('route_delete_answer',answer_id=answer.id, id=question.id)}}" class="btn btn-outline-danger btn-sm" role="button"><i class="fa-solid fa-trash-can"></i></a>
-            {% if question.author == session['userid'] %}
-                {% if answer.acceptance == 0 %}
-                    <a href="{{ url_for('accept_answer',answer_id=answer.id, question_id=question.id)}}" class="btn btn-outline-success btn-sm" role="button"><i class="fa-solid fa-clipboard-check"></i> Accept</a>
-                {% else %}
-                    <a href="{{ url_for('unaccept_answer',answer_id=answer.id, question_id=question.id)}}" class="btn btn-outline-danger btn-sm" role="button"><i class="fa-solid fa-file-circle-minus"></i> Cancel acceptance</a>
+            {% if answer.author == session['userid'] %}
+                <i class="fa-solid fa-ellipsis-vertical mx-1"></i>
+                <a href="{{ url_for('route_edit_answer', answer_id=answer.id, id=question.id)}}" title="Edit answer" class="btn btn-outline-success btn-sm" role="button"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="{{ url_for('route_delete_answer',answer_id=answer.id, id=question.id)}}" class="btn btn-outline-danger btn-sm" role="button"><i class="fa-solid fa-trash-can"></i></a>
+                {% if question.author == session['userid'] %}
+                    {% if answer.acceptance == 0 %}
+                        <a href="{{ url_for('accept_answer',answer_id=answer.id, question_id=question.id)}}" class="btn btn-outline-success btn-sm" role="button"><i class="fa-solid fa-clipboard-check"></i> Accept</a>
+                    {% else %}
+                        <a href="{{ url_for('unaccept_answer',answer_id=answer.id, question_id=question.id)}}" class="btn btn-outline-danger btn-sm" role="button"><i class="fa-solid fa-file-circle-minus"></i> Cancel acceptance</a>
+                    {% endif %}
                 {% endif %}
             {% endif %}
         </div>
@@ -132,9 +140,13 @@ class="container ms-0">
             <div id="comment-message-data-and-voting" 
             class="container border-top px-5 py-2 comment-message">
                 {{ comment.message }} - <span class="text-info">{{comment.submission_time}}</span> 
-                <a href="{{ url_for('route_edit_comment', comment_id=comment.id, id=question.id)}}" class="link-success px-1"><i class="fa-solid fa-pen-to-square"></i></a>
+                {% if comment.author == session['userid'] %}
+                    <a href="{{ url_for('route_edit_comment', comment_id=comment.id, id=question.id)}}" class="link-success px-1"><i class="fa-solid fa-pen-to-square"></i></a>
+                {% endif %}
                 <span class="text-info">Edited: {{comment.edited_number}} time(s)</span>
-                <a href="{{ url_for('route_delete_comment', comment_id=comment.id, id=question.id)}}" class="link-danger px-1"><i class="fa-solid fa-trash-can"></i></a>
+                {% if comment.author == session['userid'] %}
+                    <a href="{{ url_for('route_delete_comment', comment_id=comment.id, id=question.id)}}" class="link-danger px-1"><i class="fa-solid fa-trash-can"></i></a>
+                {% endif %}
                 {% if comment.author_name == None %}
                     Posted by <span class="text-secondary"><b><i>guest</i></b></span>    
                 {% else %}
