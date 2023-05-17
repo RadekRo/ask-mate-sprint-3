@@ -118,6 +118,17 @@ def get_user_answers(cursor, user_id):
     return cursor.fetchall()
 
 @database.connection_handler
+def get_user_comments(cursor, user_id):
+    query = """
+    SELECT id, submission_time, message 
+    FROM comment
+    WHERE author = %(user_id)s
+    """
+    data = {'user_id': user_id}
+    cursor.execute(query, data)
+    return cursor.fetchall()
+
+@database.connection_handler
 def get_all_questions(cursor, order_by, order_direction):
     if order_direction == "DESC":
         query = """

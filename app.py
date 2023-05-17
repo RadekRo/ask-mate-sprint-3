@@ -416,10 +416,12 @@ def user_details(user_id):
     user_data = data_handler.get_user_data(user_id)
     user_questions = data_handler.get_user_questions(user_id)
     user_answers = data_handler.get_user_answers(user_id)
+    user_comments = data_handler.get_user_comments(user_id)
     return render_template('user-details.html', 
                            user_data = user_data, 
                            user_questions = user_questions,
-                           user_answers = user_answers)
+                           user_answers = user_answers,
+                           user_comments = user_comments)
 
 if __name__ == '__main__':
     app.run()
