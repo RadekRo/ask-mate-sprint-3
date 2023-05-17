@@ -65,7 +65,8 @@ def get_users_list(cursor):
         SELECT u.id, u.login, u.registration_date, 
             COUNT(DISTINCT q.id) AS num_questions,
             COUNT(DISTINCT a.id) AS num_answers,
-            COUNT(DISTINCT c.id) AS num_comments
+            COUNT(DISTINCT c.id) AS num_comments,
+            reputation
         FROM users u
         LEFT JOIN question q ON u.id = q.author
         LEFT JOIN answer a ON u.id = a.author
@@ -81,7 +82,8 @@ def get_user_data(cursor, user_id):
         SELECT u.id, u.login, u.registration_date, 
             COUNT(DISTINCT q.id) AS num_questions,
             COUNT(DISTINCT a.id) AS num_answers,
-            COUNT(DISTINCT c.id) AS num_comments
+            COUNT(DISTINCT c.id) AS num_comments,
+            reputation
         FROM users u
         LEFT JOIN question q ON u.id = q.author
         LEFT JOIN answer a ON u.id = a.author
@@ -618,7 +620,7 @@ def unaccept_answer(cursor, answer_id):
 def increase_user_reputation(cursor, author_id, points):
     query = """
     UPDATE users 
-    SET reputation += %(points)s
+    SET reputation = reputation + %(points)s
     WHERE id = %(id)s
     """
     data = {'id': author_id, 'points': points}
@@ -629,7 +631,7 @@ def increase_user_reputation(cursor, author_id, points):
 def decrease_user_reputation(cursor, author_id, points):
     query = """
     UPDATE users 
-    SET reputation -= %(points)s
+    SET reputation = reputation - %(points)s
     WHERE id = %(id)s
     """
     data = {'id': author_id, 'points': points}

@@ -19,6 +19,9 @@
                 <th scope="col text-center">
                     Comments
                 </th>
+                <th scope="col text-center">
+                    Reputation
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -29,6 +32,7 @@
                 <td>{{ user['num_questions'] }}</td>
                 <td>{{ user['num_answers'] }}</td>
                 <td>{{ user['num_comments'] }}</td>
+                <td>{{ user['reputation'] }}</td>
             </tr>
             {% endfor %}
         </tbody>
