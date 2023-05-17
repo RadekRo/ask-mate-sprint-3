@@ -88,11 +88,15 @@ def route_answer(id):
 @app.route('/question/<id>/vote_add')
 def question_vote_add(id):
     data_handler.add_vote_question(id)
+    author_id = request.args.get('author_id')
+    data_handler.increase_user_reputation(author_id, points = 5)
     return redirect("/question/" + id)
 
 @app.route('/question/<id>/vote_substract')
 def question_vote_substract(id):
     data_handler.substract_vote_question(id)
+    author_id = request.args.get('author_id')
+    data_handler.decrease_user_reputation(author_id, points = 2)
     return redirect("/question/" + id)
 
 @app.route('/question/<id>/delete')
@@ -185,6 +189,8 @@ def add_comment_question(id):
 def route_answer_add_vote(answer_id):
     data_handler.add_vote_answer(answer_id)
     id = request.args.get("question_id")
+    author_id = request.args.get("author_id")
+    data_handler.increase_user_reputation(author_id, points = 10)
     redirect_dir = "/question/" + str(id) 
     return redirect(redirect_dir)
     
@@ -192,6 +198,8 @@ def route_answer_add_vote(answer_id):
 def route_answer_substract_vote(answer_id):
     data_handler.substract_vote_answer(answer_id)
     id = request.args.get("question_id")
+    author_id = request.args.get("author_id")
+    data_handler.decrease_user_reputation(author_id, points = 2)
     redirect_dir = "/question/" + str(id) 
     return redirect(redirect_dir)
     
@@ -339,6 +347,8 @@ def search_questions_by_tag(tag_id):
 @app.route('/answer/accept/<answer_id>')
 def accept_answer(answer_id):
     data_handler.accept_answer(answer_id)
+    author_id = request.args.get('author_id')
+    data_handler.increase_user_reputation(author_id, points = 15)
     question_id = request.args.get('question_id')
     return redirect('/question/' + question_id)
 

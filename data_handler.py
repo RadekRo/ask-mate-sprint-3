@@ -615,9 +615,22 @@ def unaccept_answer(cursor, answer_id):
     cursor.execute(query, data)
 
 @database.connection_handler
-def increase_user_reputation(user_id):
-    pass
+def increase_user_reputation(cursor, author_id, points):
+    query = """
+    UPDATE users 
+    SET reputation += %(points)s
+    WHERE id = %(id)s
+    """
+    data = {'id': author_id, 'points': points}
+    cursor.execute(query, data)
+
 
 @database.connection_handler
-def decrease_user_reputation(user_id):
-    pass
+def decrease_user_reputation(cursor, author_id, points):
+    query = """
+    UPDATE users 
+    SET reputation -= %(points)s
+    WHERE id = %(id)s
+    """
+    data = {'id': author_id, 'points': points}
+    cursor.execute(query, data)
