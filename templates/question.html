@@ -129,7 +129,7 @@ class="container ms-0">
     <div id="answer-data-and-voting" 
     class="answer-data">
         Answered: {{answer.submission_time}}
-        {% if session['userid'] and question.author != session['userid'] %}
+        {% if session['userid'] and answer.author != session['userid'] %}
             <h5><i class="fa-sharp fa-solid fa-square-poll-vertical text-info"></i> <a href="{{ url_for('route_answer_substract_vote', answer_id=answer.id, question_id = question.id, author_id = answer.author)}}"><i class="fa-solid fa-circle-minus text-danger"></i></a><span class="px-2">{{answer.vote_number}}</span><a href="{{ url_for('route_answer_add_vote', answer_id=answer.id, question_id = question.id, author_id = answer.author)}}"><i class="fa-solid fa-circle-plus text-success"></i></a></h5>
         {% else %}
             <h5>Currently voted: {{ answer.vote_number }}</h5>
