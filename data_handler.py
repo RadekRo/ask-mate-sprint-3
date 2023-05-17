@@ -613,3 +613,11 @@ def unaccept_answer(cursor, answer_id):
     """
     data = {'answer_id': answer_id}
     cursor.execute(query, data)
+
+@database.connection_handler
+def increase_user_reputation(user_id):
+    pass
+
+@database.connection_handler
+def decrease_user_reputation(user_id):
+    pass

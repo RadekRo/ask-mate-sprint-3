@@ -137,22 +137,22 @@ class="container ms-0">
     <div id="answer-comments">
         {% for comment in comments_answer %}
             {% if comment.answer_id == answer.id %}
-            <div id="comment-message-data-and-voting" 
-            class="container border-top px-5 py-2 comment-message">
-                {{ comment.message }} - <span class="text-info">{{comment.submission_time}}</span> 
-                {% if comment.author == session['userid'] %}
-                    <a href="{{ url_for('route_edit_comment', comment_id=comment.id, id=question.id)}}" class="link-success px-1"><i class="fa-solid fa-pen-to-square"></i></a>
-                {% endif %}
-                <span class="text-info">Edited: {{comment.edited_number}} time(s)</span>
-                {% if comment.author == session['userid'] %}
-                    <a href="{{ url_for('route_delete_comment', comment_id=comment.id, id=question.id)}}" class="link-danger px-1"><i class="fa-solid fa-trash-can"></i></a>
-                {% endif %}
-                {% if comment.author_name == None %}
-                    Posted by <span class="text-secondary"><b><i>guest</i></b></span>    
-                {% else %}
-                    Posted by <i class="fa-solid fa-user"></i> <b><i>{{ comment.author_name }}</i></b>
-                {% endif %}
-            </div>
+                <div id="comment-message-data-and-voting" 
+                class="container border-top px-5 py-2 comment-message">
+                    {{ comment.message }} - <span class="text-info">{{comment.submission_time}}</span> 
+                    {% if comment.author == session['userid'] %}
+                        <a href="{{ url_for('route_edit_comment', comment_id=comment.id, id=question.id)}}" class="link-success px-1"><i class="fa-solid fa-pen-to-square"></i></a>
+                    {% endif %}
+                    <span class="text-info">Edited: {{comment.edited_number}} time(s)</span>
+                    {% if comment.author == session['userid'] %}
+                        <a href="{{ url_for('route_delete_comment', comment_id=comment.id, id=question.id)}}" class="link-danger px-1"><i class="fa-solid fa-trash-can"></i></a>
+                    {% endif %}
+                    {% if comment.author_name == None %}
+                        Posted by <span class="text-secondary"><b><i>guest</i></b></span>    
+                    {% else %}
+                        Posted by <i class="fa-solid fa-user"></i> <b><i>{{ comment.author_name }}</i></b>
+                    {% endif %}
+                </div>
             {% endif %}
         {% endfor %}
     </div>
