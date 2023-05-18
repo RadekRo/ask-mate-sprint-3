@@ -61,6 +61,7 @@
         </tbody>
     </table>
 <h4>Answers given</h4>
+    {% if user_answers | length > 0 %}
     <table class="table table-striped w-auto">
         <thead>
             <tr>
@@ -81,26 +82,32 @@
             {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <span class="yx-3"><i>So far, the user hasn't provided any answer.</i></span>
+    {% endif %}
 <h4>Comments submitted</h4>
-        <table class="table table-striped w-auto">
-            <thead>
-                <tr>
-                    <th scope="col">
-                        Date
-                    </th>
-                    <th scope="col">
-                        Comment's message
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for comment in user_comments %}
-                <tr>
-                    <td>{{ comment.submission_time }}</td>
-                    <td>{{ comment.message }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
+    {% if user_comments | length > 0 %}
+    <table class="table table-striped w-auto">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Date
+                </th>
+                <th scope="col">
+                    Comment's message
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in user_comments %}
+            <tr>
+                <td>{{ comment.submission_time }}</td>
+                <td>{{ comment.message }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-
+    {% else %}
+    <span class="yx-3"><i>So far, the user hasn't provided any comment.</i></span>
+    {% endif %}
 {% endblock %}
