@@ -538,9 +538,9 @@ def search_for_questions(cursor, search_argument):
         FROM question 
         WHERE id IN (SELECT DISTINCT question_id
                         FROM answer 
-                        WHERE message LIKE %(search)s)
-            OR title LIKE %(search)s 
-            OR message LIKE %(search)s
+                        WHERE message iLIKE %(search)s)
+            OR title iLIKE %(search)s 
+            OR message iLIKE %(search)s
         ORDER BY submission_time DESC
     """
     data = {'search': '%' + search_argument + '%'}
@@ -613,9 +613,20 @@ def delete_all_question_tags(cursor, question_id):
 
 def add_markups_to_questions(questions_list, searching_phrase):
     for question in questions_list:
-        question['title'] = question['title'].replace(searching_phrase, '<mark>' + searching_phrase + '</mark>')
-        question['message'] = question['message'].replace(searching_phrase, '<mark>' + searching_phrase + '</mark>')
+        question['title'] = question['title'].upper().replace(searching_phrase.upper(), '<mark>' + searching_phrase.upper() + '</mark>')
+        question['title'] = capitalize_sentences(question['title'].lower())
+        question['message'] = question['message'].upper().replace(searching_phrase.upper(), '<mark>' + searching_phrase.upper() + '</mark>')
+        question['message'] = capitalize_sentences(question['message'])
     return questions_list
+
+def capitalize_sentences(sentences):
+    splitted_sentences = sentences.split('.') 
+    for i in range(len(splitted_sentences)):
+        if i > 0:
+            splitted_sentences[i] = splitted_sentences[i][1:].capitalize()
+        else:
+            splitted_sentences[i] = splitted_sentences[i].capitalize()
+    return '. '.join(splitted_sentences)
 
 @database.connection_handler
 def accept_answer(cursor, answer_id):
