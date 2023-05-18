@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+<a href="/list" class="btn btn-light btn-sm mb-4" role="button">
+    <i class="fa-solid fa-circle-arrow-left"></i> Back to Questions List
+</a>
+
+<h4>Current <span class="text-info">#</span>tags list</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Tag name
+                </th>
+                <th scope="col">
+                    Occurances
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tag in tags_list %}
+            <tr>
+                <th scope="row">{{ tag.name }}</th>
+                <td>{{ tag.number }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

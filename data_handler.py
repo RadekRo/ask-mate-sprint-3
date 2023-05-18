@@ -668,3 +668,15 @@ def decrease_user_reputation(cursor, author_id, points):
     """
     data = {'id': author_id, 'points': points}
     cursor.execute(query, data)
+
+@database.connection_handler
+def get_tags_list(cursor):
+    query = """
+    SELECT name, COUNT(tag_id) as number
+    FROM tag, question_tag 
+    WHERE question_tag.tag_id = tag.id
+    GROUP by name 
+    ORDER by number DESC
+    """
+    cursor.execute(query)
+    return cursor.fetchall()

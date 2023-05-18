@@ -12,7 +12,11 @@
 {% endif %}
 <div class="container">
     <div class="questions-list">
-        <span class="questions-list-header"><h4>Latest Questions ({{number_of_latest_questions}})</h4></span>
+        <span class="questions-list-header"><h4>Latest Questions ({{number_of_latest_questions}})</h4>
+            <a href="/tags" class="btn btn-warning btn-sm mb-4" role="button">
+                <i class="fa-solid fa-hashtag"></i> Show current <b>#tags</b> list
+            </a>
+        </span>
         {%if login_message%}
         {{login_message}} as {{user}}
         {%endif%}<br>

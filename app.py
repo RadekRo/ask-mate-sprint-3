@@ -423,6 +423,11 @@ def user_details(user_id):
                            user_answers = user_answers,
                            user_comments = user_comments)
 
+@app.route('/tags')
+def tags_list():
+    tags_list = data_handler.get_tags_list()
+    return render_template("tags.html", tags_list = tags_list)
+
 if __name__ == '__main__':
     app.run()
 
