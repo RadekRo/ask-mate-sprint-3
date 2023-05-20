@@ -19,7 +19,7 @@
         <tbody>
             {% for tag in tags_list %}
             <tr>
-                <th scope="row">{{ tag.name }}</th>
+                <th scope="row"> <a href="{{ url_for('search_questions_by_tag',tag_id=tag.id)}}" class="link-dark text-decoration-none">{{ tag.name }}</a></th>
                 <td>{{ tag.number }}</td>
             </tr>
             {% endfor %}

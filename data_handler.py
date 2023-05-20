@@ -560,11 +560,11 @@ def search_for_questions_by_tag(cursor, tag_id):
     return cursor.fetchall()
 
 
-@database.connection_handler
-def get_tags_list(cursor):
-    query = "SELECT * FROM tag"
-    cursor.execute(query)
-    return cursor.fetchall()
+# @database.connection_handler
+# def get_tags_list(cursor):
+#     query = "SELECT * FROM tag"
+#     cursor.execute(query)
+#     return cursor.fetchall()
 
 
 @database.connection_handler
@@ -672,10 +672,10 @@ def decrease_user_reputation(cursor, author_id, points):
 @database.connection_handler
 def get_tags_list(cursor):
     query = """
-    SELECT name, COUNT(tag_id) as number
+    SELECT id, name, COUNT(tag_id) as number
     FROM tag, question_tag 
     WHERE question_tag.tag_id = tag.id
-    GROUP by name 
+    GROUP by name, id
     ORDER by number DESC
     """
     cursor.execute(query)
